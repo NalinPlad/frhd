@@ -172,51 +172,51 @@ class Track:
             self.insLine(kin, prevx, prevy, x, y)
 
 
-            # Insert the default start line
-            # Created by gaetgu
-            def insStart(self):
-                insLine('p', -40, 50, 40, 50)
+    # Insert the default start line
+    # Created by gaetgu
+    def insStart(self):
+        insLine('p', -40, 50, 40, 50)
 
 
-            # Get info about a user
-            @staticmethod
-            def getUser(username):
-                response = requests.get("https://www.freeriderhd.com/u/{}?ajax".format(username))
-                return response.json()
+    # Get info about a user
+    @staticmethod
+    def getUser(username):
+        response = requests.get("https://www.freeriderhd.com/u/{}?ajax".format(username))
+        return response.json()
 
 
-            # Get info about a track
-            @staticmethod
-            def getTrack(track_id):
-                response = requests.get("https://www.freeriderhd.com/t/{}?ajax=true".format(track_id))
-                return response.json()
+    # Get info about a track
+    @staticmethod
+    def getTrack(track_id):
+        response = requests.get("https://www.freeriderhd.com/t/{}?ajax=true".format(track_id))
+        return response.json()
 
-            
-            #Generate the final code to be printed out
-            def genCode(self):
-                # Holds raw data to be joined into frhd text
-                self.trackdatalist = [[],[],[]]
+    
+    #Generate the final code to be printed out
+    def genCode(self):
+        # Holds raw data to be joined into frhd text
+        self.trackdatalist = [[],[],[]]
 
-                for pline in self.tracklist[0]: # Physics
-                    self.trackdatalist[0] += En.encline(pline)
+        for pline in self.tracklist[0]: # Physics
+            self.trackdatalist[0] += En.encline(pline)
 
-                for sline in self.tracklist[1]: # Scenery
-                    self.trackdatalist[1] += En.encline(sline)
+        for sline in self.tracklist[1]: # Scenery
+            self.trackdatalist[1] += En.encline(sline)
 
-                for pup in self.tracklist[2]: #powerups
-                    if len(pup) == 3: #if powerup does not have the rotation attribute
-                        self.trackdatalist[2] += En.encpup(pup[1],pup[2],pup[0])
-                    if len(pup) == 4: #if powerup does have rotation attribute
-                        self.trackdatalist[2] += En.encpupr(pup[1],pup[2],pup[3],pup[0])
+        for pup in self.tracklist[2]: #powerups
+            if len(pup) == 3: #if powerup does not have the rotation attribute
+                self.trackdatalist[2] += En.encpup(pup[1],pup[2],pup[0])
+            if len(pup) == 4: #if powerup does have rotation attribute
+                self.trackdatalist[2] += En.encpupr(pup[1],pup[2],pup[3],pup[0])
 
-                self.finalData = '' # This is what will be put into frhd
+        self.finalData = '' # This is what will be put into frhd
 
-                for typ in self.trackdatalist: #type of object
-                    for indiv in typ: #individual object
-                        self.finalData += indiv[0]
-                    self.finalData += '#'#add object end marker
+        for typ in self.trackdatalist: #type of object
+            for indiv in typ: #individual object
+                self.finalData += indiv[0]
+            self.finalData += '#'#add object end marker
 
-                return self.finalData
+        return self.finalData
 
 
 if __name__ == 'main':
