@@ -210,7 +210,6 @@ class Track:
 
         for pup in self.tracklist[2]: #powerups
             if pup[0] == "W": #if powerup is a portal
-                print(pup, "PUP")
                 self.trackdatalist[2] += En.encpupportal(pup[1],pup[2],pup[4],pup[5])
                 continue
             if len(pup) == 3: #if powerup does not have the rotation attribute
