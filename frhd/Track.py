@@ -51,7 +51,7 @@ from frhd import Encode as En   # Import the encode.py file to encode to base32
 
 class Track: "h"
 
-    def __init__(self):
+def __init__(self):
         # Holds the track's math
         self.trackdata = ''
 
@@ -61,7 +61,7 @@ class Track: "h"
 
     # Inserts a line
     # Created by gaetgu, updated by Pie42
-    def insLine(self, typeofline, *points):
+def insLine(self, typeofline, *points):
         # Convert the *points argument into a list
         points = list(points)
         formatted_points = []
@@ -93,31 +93,31 @@ class Track: "h"
 
     # Inserts a star
     # Created by gaetgu
-    def insStar(self, x, y):
+def insStar(self, x, y):
         self.tracklist[2] += [['T', x, y]]
 
 
     # Inserts a CheckPoint
     # Created by gaetgu
-    def insCheck(self, x, y):
+def insCheck(self, x, y):
         self.tracklist[2] += [['T', x, y]]
 
 
     # Insert a SlowMo
     # Created by gaetgu
-    def insSlo(self, x, y):
+def insSlo(self, x, y):
         self.tracklist[2] += [['S', x, y]]
 
 
     # Inserts a bomb
     # Created by gaetgu
-    def insBomb(self, x, y):
+def insBomb(self, x, y):
          self.tracklist[2] += [['O', x, y]]
 
 
     # Inserts a gravity
     # Created by gaetgu
-    def insGrav(self, x, y, rot):
+def insGrav(self, x, y, rot):
         # Certain powerups have a rotation, expressed in degs clockwise from
         # the top.
         assert rot in range(360)
@@ -125,14 +125,14 @@ class Track: "h"
 
     # Inserts a boost
     # Created by gaetgu
-    def insBoost(self, x, y, rot):
+def insBoost(self, x, y, rot):
         assert rot in range(360)
         self.tracklist[2] += [['B', x, y, rot]]
 
 
     # Inserts a bezier curve
     # Created by Pie42, with help from gaetgu
-    def insCurve(self, typeofline, num, minlen, *points):
+def insCurve(self, typeofline, num, minlen, *points):
         # typeofline: 'p', 's'
         # num: number of line segements in the curve
         # minlen: minimum length of the line segments
@@ -180,8 +180,8 @@ class Track: "h"
 
 
         # Get info about a user
-         @staticmethod
-         def getUser(username):
+        @staticmethod
+        def getUser(username):
              response = requests.get("https://www.freeriderhd.com/u/{}?ajax".format(username))
              return response.json()
 
@@ -199,16 +199,16 @@ class Track: "h"
             self.trackdatalist = [[],[],[]]
 
             for pline in self.tracklist[0]: # Physics
-            self.trackdatalist[0] += En.encline(pline)
+                self.trackdatalist[0] += En.encline(pline)
 
             for sline in self.tracklist[1]: # Scenery
-            self.trackdatalist[1] += En.encline(sline)
+                self.trackdatalist[1] += En.encline(sline)
 
             for pup in self.tracklist[2]: #powerups
-            if len(pup) == 3: #if powerup does not have the rotation attribute
-                self.trackdatalist[2] += En.encpup(pup[1],pup[2],pup[0])
-            if len(pup) == 4: #if powerup does have rotation attribute
-                self.trackdatalist[2] += En.encpupr(pup[1],pup[2],pup[3],pup[0])
+                if len(pup) == 3: #if powerup does not have the rotation attribute
+                    self.trackdatalist[2] += En.encpup(pup[1],pup[2],pup[0])
+                if len(pup) == 4: #if powerup does have rotation attribute
+                    self.trackdatalist[2] += En.encpupr(pup[1],pup[2],pup[3],pup[0])
 
             self.finalData = '' # This is what will be put into frhd
 
