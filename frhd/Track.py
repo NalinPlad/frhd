@@ -209,13 +209,16 @@ class Track:
             self.trackdatalist[1] += En.encline(sline)
 
         for pup in self.tracklist[2]: #powerups
+            if pup[0] == "W": #if powerup is a portal
+                print(pup, "PUP")
+                self.trackdatalist[2] += En.encpupportal(pup[1],pup[2],pup[4],pup[5])
+                continue
             if len(pup) == 3: #if powerup does not have the rotation attribute
                 self.trackdatalist[2] += En.encpup(pup[1],pup[2],pup[0])
+                continue
             if len(pup) == 4: #if powerup does have rotation attribute
                 self.trackdatalist[2] += En.encpupr(pup[1],pup[2],pup[3],pup[0])
-            if pup[0] == "W": #if powerup is a portal
-                print(pup)
-                self.trackdatalist[2] += En.encpupportal(pup[1],pup[2],pup[4],pup[5])
+                continue
 
         self.finalData = '' # This is what will be put into frhd
 
