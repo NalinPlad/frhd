@@ -51,131 +51,136 @@ from frhd import Encode as En   # Import the encode.py file to encode to base32
 
 class Track:
     def __init__(self):
-            # Holds the track's math
-            self.trackdata = ''
+        # Holds the track's math
+        self.trackdata = ''
 
-            # 3 empty lists, one each for physics, scenery, and powerups.
-            self.tracklist = [[], [], []]
+        # 3 empty lists, one each for physics, scenery, and powerups.
+        self.tracklist = [[], [], []]
 
 
-        # Inserts a line
-        # Created by gaetgu, updated by Pie42
+    # Inserts a line
+    # Created by gaetgu, updated by Pie42
     def insLine(self, typeofline, *points):
-            # Convert the *points argument into a list
-            points = list(points)
-            formatted_points = []
+        # Convert the *points argument into a list
+        points = list(points)
+        formatted_points = []
 
-            # Unpacks points
-            def unpack(x, n):
-                if n <= 100:
-                    for item in x:
-                        if type(item) == int:
-                            formatted_points.append(item)
-                        else:
-                            unpack(item, n + 1)
-            unpack(points, 0)
+        # Unpacks points
+        def unpack(x, n):
+            if n <= 100:
+                for item in x:
+                    if type(item) == int:
+                        formatted_points.append(item)
+                    else:
+                        unpack(item, n + 1)
+        unpack(points, 0)
 
-            # Arrange the lists
-            if len(formatted_points) % 2 == 1:
-                points.pop()
-            if len(formatted_points) < 4:
-                return
+        # Arrange the lists
+        if len(formatted_points) % 2 == 1:
+            points.pop()
+        if len(formatted_points) < 4:
+            return
 
-            # Physics Line
-            if typeofline == 'p':
-                self.tracklist[0] += [formatted_points]
+        # Physics Line
+        if typeofline == 'p':
+            self.tracklist[0] += [formatted_points]
 
-            # Scenery Line
-            if typeofline == 's':
-                self.tracklist[1] += [formatted_points]
+        # Scenery Line
+        if typeofline == 's':
+            self.tracklist[1] += [formatted_points]
 
 
-        # Inserts a star
-        # Created by gaetgu
+    # Inserts a star
+    # Created by gaetgu
     def insStar(self, x, y):
-            self.tracklist[2] += [['T', x, y]]
+        self.tracklist[2] += [['T', x, y]]
 
 
-        # Inserts a CheckPoint
-        # Created by gaetgu
+    # Inserts a CheckPoint
+    # Created by gaetgu
     def insCheck(self, x, y):
-            self.tracklist[2] += [['T', x, y]]
+        self.tracklist[2] += [['T', x, y]]
 
 
-        # Insert a SlowMo
-        # Created by gaetgu
+    # Insert a SlowMo
+    # Created by gaetgu
     def insSlo(self, x, y):
-            self.tracklist[2] += [['S', x, y]]
+        self.tracklist[2] += [['S', x, y]]
 
 
-        # Inserts a bomb
-        # Created by gaetgu
+    # Inserts a bomb
+    # Created by gaetgu
     def insBomb(self, x, y):
-            self.tracklist[2] += [['O', x, y]]
+        self.tracklist[2] += [['O', x, y]]
 
 
-        # Inserts a gravity
-        # Created by gaetgu
+    # Inserts a gravity
+    # Created by gaetgu
     def insGrav(self, x, y, rot):
-            # Certain powerups have a rotation, expressed in degs clockwise from
-            # the top.
-            assert rot in range(360)
-            self.tracklist[2] += [['G', x, y, rot]]
+        # Certain powerups have a rotation, expressed in degs clockwise from
+        # the top.
+        assert rot in range(360)
+        self.tracklist[2] += [['G', x, y, rot]]
 
-        # Inserts a boost
-        # Created by gaetgu
+    # Inserts a boost
+    # Created by gaetgu
     def insBoost(self, x, y, rot):
-            assert rot in range(360)
-            self.tracklist[2] += [['B', x, y, rot]]
+        assert rot in range(360)
+        self.tracklist[2] += [['B', x, y, rot]]
+            
+    # Inserts a portal
+    # Created by NalidPlad
+    def insPortal(self, x1, y1, x2, y2):
+        self.tracklist[2] += [['W', x1, y1, "W", x2, y2]]
 
 
-        # Inserts a bezier curve
-        # Created by Pie42, with help from gaetgu
+    # Inserts a bezier curve
+    # Created by Pie42, with help from gaetgu
     def insCurve(self, typeofline, num, minlen, *points):
-            # typeofline: 'p', 's'
-            # num: number of line segements in the curve
-            # minlen: minimum length of the line segments
-            # *points: use a single list of points, e.g. ↓
-            # [(x, y), (x, y), (x, y)]
-            if len(points) == 1 and (type(points[0]) == list or type(points[0]) == tuple):
-                points = points[0]
-            if len(points) < 3:
-                return
+        # typeofline: 'p', 's'
+        # num: number of line segements in the curve
+        # minlen: minimum length of the line segments
+        # *points: use a single list of points, e.g. ↓
+        # [(x, y), (x, y), (x, y)]
+        if len(points) == 1 and (type(points[0]) == list or type(points[0]) == tuple):
+            points = points[0]
+        if len(points) < 3:
+            return
 
-            N = len(points)
-            t = range(num + 1)
-            curve = [[0,0] for i in range(num)]
-            factorial = lambda x: 1 if x < 2 else x * factorial(x - 1)
+        N = len(points)
+        t = range(num + 1)
+        curve = [[0,0] for i in range(num)]
+        factorial = lambda x: 1 if x < 2 else x * factorial(x - 1)
 
-            for i in range(N):
-                # Binomial coefficient
-                binomial = factorial(N - 1) / float(factorial(i) * factorial(N - 1) - i)
+        for i in range(N):
+            # Binomial coefficient
+            binomial = factorial(N - 1) / float(factorial(i) * factorial(N - 1) - i)
 
-                # Bernstein polynomial
-                bernstein = [binomial * ((m / num) ** i) * ((1 - (m / num)) ** ((N - 1) - i)) for m in t]
+            # Bernstein polynomial
+            bernstein = [binomial * ((m / num) ** i) * ((1 - (m / num)) ** ((N - 1) - i)) for m in t]
 
-                cCurve = [[b * points[i][0], b * points[i][1]] for b in bernstein]
-                curve = list(map(lambda a, b: [a[0] + b[0], a[1] + b[1]], curve, cCurve))
+            cCurve = [[b * points[i][0], b * points[i][1]] for b in bernstein]
+            curve = list(map(lambda a, b: [a[0] + b[0], a[1] + b[1]], curve, cCurve))
 
-            prevx = points[0][0]
-            prevy = points[0][1]
+        prevx = points[0][0]
+        prevy = points[0][1]
 
-            for i in range(num):
-                x = int(curve[i][0])
-                y = int(curve[i][0])
+        for i in range(num):
+            x = int(curve[i][0])
+            y = int(curve[i][0])
 
-                if (prevx - x > minlen or prevx - x < -1 * minlen) or (prevy - y > minlen or prevy - y < -minlen):
-                    self.insLine(kind, prevx, prevy, x, y)
-                    prevx = x
-                    prevy = y
+            if (prevx - x > minlen or prevx - x < -1 * minlen) or (prevy - y > minlen or prevy - y < -minlen):
+                self.insLine(kind, prevx, prevy, x, y)
+                prevx = x
+                prevy = y
 
-            self.insLine(kin, prevx, prevy, x, y)
+        self.insLine(kin, prevx, prevy, x, y)
 
 
     # Insert the default start line
     # Created by gaetgu
     def insStart(self):
-        insLine('p', -40, 50, 40, 50)
+        self.insLine('p', -40, 50, 40, 50)
 
 
     # Get info about a user
@@ -208,6 +213,8 @@ class Track:
                 self.trackdatalist[2] += En.encpup(pup[1],pup[2],pup[0])
             if len(pup) == 4: #if powerup does have rotation attribute
                 self.trackdatalist[2] += En.encpupr(pup[1],pup[2],pup[3],pup[0])
+            if pup[0] == "W": #if powerup is a portal
+                self.trackdatalist[2] += En.encpupportal(pup[1],pup[2],pup[4],pup[5])
 
         self.finalData = '' # This is what will be put into frhd
 

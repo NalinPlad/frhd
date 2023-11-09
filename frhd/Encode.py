@@ -10,6 +10,10 @@ def encpupr(x,y,rot,pupcode):
     #encode powerup with rotation
     return [['%s %s %s %s,' % (pupcode,b32e(x),b32e(y),b32e(rot))]]
 
+def encpupportal(x1, y1, x2, y2):
+    #encode portal
+    return [['W %s %s W %s %s,' % (b32e(x1),b32e(y1),b32e(x2),b32e(y2))]]
+
 def b32e(numbera):
     #encode number. I struggled to find the right alphabet that frhd used for their encoding
     """Encode number in freerider base32."""
