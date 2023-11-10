@@ -121,6 +121,10 @@ class Track:
         # the top.
         assert rot in range(360)
         self.tracklist[2] += [['G', x, y, rot]]
+    
+    # Inserts an anti gravity trigger
+    def insAntiGrav(self, x, y):
+        self.tracklist[2] += [['A', x, y]]
 
     # Inserts a boost
     # Created by gaetgu
