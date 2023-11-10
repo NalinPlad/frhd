@@ -12,7 +12,7 @@ def encpupr(x,y,rot,pupcode):
 
 def encpupportal(x1, y1, x2, y2):
     #encode portal
-    return [['W %s %s W %s %s,' % (b32e(x1),b32e(y1),b32e(x2),b32e(y2))]]
+    return [['W %s %s %s %s,' % (b32e(x1),b32e(y1),b32e(x2),b32e(y2))]]
 
 def b32e(numbera):
     #encode number. I struggled to find the right alphabet that frhd used for their encoding
