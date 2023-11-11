@@ -152,12 +152,18 @@ class Track:
             sec = 0
         elif type == "s":
             sec = 1
+
             
         # default spacing is 20, so add that to the user submitted spacing
         spacing += 20
             
         for ind,char in enumerate(text):
-            self.tracklist[sec].append(Fn.DrawLetter(x+(spacing*ind), y, char))
+            # print(char, 'char')
+            chardata = Fn.DrawLetter(x+(spacing*ind), y, char)
+            # print(chardata, "char data")
+            for line in chardata:
+                self.tracklist[sec].append(line)
+        # print(self.tracklist[sec])
 
 
     # Inserts a bezier curve
