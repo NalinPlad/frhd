@@ -147,7 +147,7 @@ class Track:
         
     # Adds text
     # Created by NalinPlad
-    def insText(self, x, y, text, type="s", spacing=0):
+    def addText(self, x, y, text, type="s", spacing=0):
         if type == "p":
             sec = 0
         elif type == "s":
