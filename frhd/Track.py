@@ -16,7 +16,8 @@
 # |__/      |__/  |__/|__/  |__/|_______/
 #
 #   A python package to generate tracks completely with python.
-#   Created and maintained by Gabriel Gutierrez.
+#   Fork by NalinPlad with many new features
+#   Created by Gabriel Gutierrez.
 #   Special thanks to Pie42 and Calculus0972 for helping out.
 #
 #   The directory structure:
@@ -29,6 +30,7 @@
 #   │   ├── Encode.py
 #   │   ├── Loader.py
 #   │   ├── Track.py
+#   │   ├── Font.py
 #   │   ├── __init__.py
 #   ├── frhd.egg-info
 #   │   ├── PKG-INFO
@@ -47,6 +49,7 @@
 import json                     # Import json for the getTrack and getUser
 import requests                 # Import requests for the getTrack and getUser
 from frhd import Encode as En   # Import the encode.py file to encode to base32
+from frhd import Font as Fn     # Import the font.py file to encode text
 
 
 class Track:
@@ -56,6 +59,11 @@ class Track:
 
         # 3 empty lists, one each for physics, scenery, and powerups.
         self.tracklist = [[], [], []]
+
+
+    # Naming convention:
+    # insObj = insert a plain object
+    # addObj = adds a nonstandar object only defined in this library which gets rendered to actual game objects
 
 
     # Inserts a line
@@ -136,6 +144,20 @@ class Track:
     # Created by NalidPlad
     def insPortal(self, x1, y1, x2, y2):
         self.tracklist[2] += [['W', x1, y1, "W", x2, y2]]
+        
+    # Adds text
+    # Created by NalinPlad
+    def insText(self, x, y, text, type="s", spacing=0):
+        if type == "p":
+            sec = 0
+        elif type == "s":
+            sec = 1
+            
+        # default spacing is 20, so add that to the user submitted spacing
+        spacing += 20
+            
+        for (char,ind) in text:
+            self.tracklist[sec].append(Fn.DrawLetter(x+(spacing*ind), y, char))
 
 
     # Inserts a bezier curve
@@ -235,13 +257,14 @@ class Track:
 
 if __name__ == 'main':
     my_track = Track()
-    my_track.insLine(6, 6, 6, 6, 'p')
-    my_track.insLine(6, 6, 6, 6, 's')
-    my_track.insStar(6, 6)
-    my_track.insCheck(6, 6)
-    my_track.insSlowMo(6, 6)
-    my_track.insBomb(6, 6)
-    my_track.insGravity(6, 6, 6)
-    my_track.insBoost(6, 6, 6)
-    my_track.genCode()
+    # my_track.insLine(6, 6, 6, 6, 'p')
+    # my_track.insLine(6, 6, 6, 6, 's')
+    # my_track.insStar(6, 6)
+    # my_track.insCheck(6, 6)
+    # my_track.insSlowMo(6, 6)
+    # my_track.insBomb(6, 6)
+    # my_track.insGravity(6, 6, 6)
+    # my_track.insBoost(6, 6, 6)
+    # my_track.genCode()
+    my_track.insText(0, 0, "A")
     print(my_track.genCode())

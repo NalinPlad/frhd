@@ -1,1 +1,1 @@
-from frhd import Track, Encode, Decode, Loader
+from frhd import Track, Encode, Decode, Loader, Font
