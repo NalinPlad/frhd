@@ -5,6 +5,7 @@ frhd/Decode.py
 frhd/Encode.py
 frhd/Loader.py
 frhd/Track.py
+frhd/Font.py
 frhd/__init__.py
 frhd.egg-info/PKG-INFO
 frhd.egg-info/SOURCES.txt
