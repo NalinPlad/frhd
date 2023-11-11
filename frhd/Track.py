@@ -256,6 +256,7 @@ class Track:
 
 
 if __name__ == 'main':
+    print("TESTING")
     my_track = Track()
     # my_track.insLine(6, 6, 6, 6, 'p')
     # my_track.insLine(6, 6, 6, 6, 's')
@@ -267,4 +268,5 @@ if __name__ == 'main':
     # my_track.insBoost(6, 6, 6)
     # my_track.genCode()
     my_track.insText(0, 0, "A")
+    print("CODE:")
     print(my_track.genCode())
