@@ -156,7 +156,7 @@ class Track:
         # default spacing is 20, so add that to the user submitted spacing
         spacing += 20
             
-        for (char,ind) in text:
+        for ind,char in enumerate(text):
             self.tracklist[sec].append(Fn.DrawLetter(x+(spacing*ind), y, char))
 
 

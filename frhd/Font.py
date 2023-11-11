@@ -1,6 +1,6 @@
 def shift(char, x, y):
     for line in char:
-        for (point,ind) in line:
+        for ind,point in enumerate(line):
             if ind % 2 == 0:
                 point += x
             else:
