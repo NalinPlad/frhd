@@ -158,9 +158,7 @@ class Track:
         spacing += 20
             
         for ind,char in enumerate(text):
-            # print(char, 'char')
-            chardata = Fn.DrawLetter(x+(spacing*ind), y, char)
-            # print(chardata, "char data")
+            chardata = Fn.DrawLetter(x+(spacing*ind), y, char.upper())
             for line in chardata:
                 self.tracklist[sec].append(line)
         # print(self.tracklist[sec])

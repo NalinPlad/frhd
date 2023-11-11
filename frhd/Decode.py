@@ -33,4 +33,7 @@ def b32d(n): #Base 32 decode
     return int(n, 32)
 
 if __name__ == '__main__':
-    print(declinestr('0 0 0 -k a -k a 0,a -a 0 -a'))
+    import pyperclip
+    string = input('Enter a char: ')
+    print(declinestr(string))
+    pyperclip.copy(str(declinestr(string)))
